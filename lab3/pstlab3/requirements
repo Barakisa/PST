@@ -1,0 +1,22 @@
+// // Užduotis 1:
+// // NOTE: REIKIA NAUDOTI EXPLICIT WAIT
+// //
+// // 1. Atsidaryti https://demoqa.com/
+// // 2. Pasirinkti "Widgets" kortelę
+// // 3. Pasirinkti meniu punkta "Progress Bar"
+// // 4. Spausti mygtuka "Start"
+// // 5. Sulaukti, kol bus 100% in paspausti "Reset"
+// // 6. Isitikinti, kad progreso eilutė tuscia (0%).
+
+
+
+// Užduotis 2:
+// Galima naudoti implicit waits
+//
+// 1. Atsidaryti https://demoqa.com/
+// 2. Pasirinkti "Elements" kortele,
+// 3. Pasirinkti meniu punkta "Web Tables"
+// 4. Prideti pakankamai elementų, kad atsirastų antras puslapis puslapiavime
+// 5. Pasirinkti antra puslapi paspaudus "Next"
+// 6. Ištrinti elementa antrajame puslapyje
+// 7. Įsitikinti, kad automatiškai puslapiavimas perkeliamas į pirmąjį puslapį ir kad puslapiu skaičius

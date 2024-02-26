@@ -1,0 +1,21 @@
+	
+2024
+1. Atsidaryti tinklalapį https://demowebshop.tricentis.com/
+2. Spausti 'Gift Cards' kairiajame meniu.
+3. Pasirinkti prekės, kurios kaina didensė nei 99 nuorodą. 
+	Reikia 'neįhardcodinti' pasirenkamos prekės, nes prekių kaina gali keistis ateityje
+4. Supildyti laukus 'Recipient's Name:', 'Your Name:' savo nuožiūra
+5. Į tekstinį lauką 'Qty' įvesti '5000'
+6. Spausti 'Add to cart' mygtuką
+7. Spausti 'Add to wish list' mygtuką
+8. Spausti 'Jewelry' kairiajame meniu. 
+9. Spausti 'Create Your Own Jewelry' nuorodą.
+10. Pasirinkti reikšmes: 'Material' - 'Silver 1mm', 'Length in cm' - '80', 'Pendant' - 'Star'
+11. Į tekstinį lauką 'Qty' įvesti '26'
+12. Spausti 'Add to cart' mygtuką
+13. Spausti 'Add to wish list' mygtuką
+14. Spausti nuorodą 'Wishlist' puslapio viršuje 
+15. Abejom prekėm paspausti 'Add to cart' varneles
+16. Spausti 'Add to cart' mygtuką
+17. Atsiradus Shopping cart puslapyje patvirtinti, kad 'Sub-Total' reikšmė yra '1002600.00'
+	//*[@class="cart-total" and .//*[@class="nobr" and ./text()="Sub-Total"]]//*[@class="product-price"]
