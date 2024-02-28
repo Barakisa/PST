@@ -18,4 +18,3 @@
 15. Abejom prekėm paspausti 'Add to cart' varneles
 16. Spausti 'Add to cart' mygtuką
 17. Atsiradus Shopping cart puslapyje patvirtinti, kad 'Sub-Total' reikšmė yra '1002600.00'
-	//*[@class="cart-total" and .//*[@class="nobr" and ./text()="Sub-Total"]]//*[@class="product-price"]
