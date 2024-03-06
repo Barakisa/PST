@@ -1,0 +1,35 @@
+Užduotis:
+Sukurti du automatinius testus, uždavinio sąlygos:
+- Prieš vykdant testus automatiniu būdu turi būti sukurtas naujas vartotojas.
+- Abu testai turi prisijungti tuo pačiu sukurtuoju vartotoju.
+- Testai ir naudotojo kūrimas turi būti atliekami atskirose webdriverio sesijose.
+- Pasinaudoti Unit testų anotacijomis iškviečiant ir uždarant webdriverio sesijas.
+- Paleisti testus per Jenkins jobą su cron scheduleriu.
+
+
+Naudotojo kūrimo eiga:
+1. Atsidaryti tinklalapį https://demowebshop.tricentis.com/
+2. Spausti 'Log in'
+3. Spausti 'Register' skiltyje 'New Customer'
+4. Užpildyti registracijos formos laukus
+5. Spausti 'Register'
+6. Spausti 'Continue'
+
+Testų scenarijai:
+1. Atsidaryti tinklalapį https://demowebshop.tricentis.com/
+2. Spausti 'Log in'
+3. Užpildyti 'Email:', 'Password:' ir spausti 'Log in'
+4. Šoniniame meniu pasirinkti 'Digital downloads'
+5. Pridėti į krepšelį prekes nuskaitant tekstinį failą (pirmam testui skaityti iš data1.txt, antram testui skaityti iš data2.txt)
+6. Atsidaryti 'Shopping cart'
+7. Paspausti 'I agree' varnelę ir mygtuką 'Checkout'
+8. 'Billing Address' pasirinkti jau esantį adresą arba supildyti naujo adreso laukus, spausti 'Continue'
+9. 'Payment Method' spausti 'Continue'
+10. 'Payment Information' spausti 'Continue'
+11. 'Confirm Order' spausti 'Confirm'
+12. Įsitikinti, kad užsakymas sėkmingai užskaitytas.
+
+data1.txt:  data2.txt:
+3rd Album   3rd Album
+3rd Album   Music 2
+3rd Album
