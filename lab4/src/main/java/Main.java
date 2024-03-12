@@ -1,4 +1,4 @@
-package semestras6.pst;
+
 
 public class Main {
     public static void main(String[] args) {
