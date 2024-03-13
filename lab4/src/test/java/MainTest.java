@@ -28,6 +28,7 @@ public class MainTest {
 
     @BeforeClass
     public static void createUser() {
+        System.out.println("BeforeClass");
         ChromeDriver driver2 = createChromeDriver();
 
         // 1. Atsidaryti tinklalapį https://demowebshop.tricentis.com/
@@ -78,13 +79,13 @@ public class MainTest {
     @Before
     public void createDriver() {
         driver = createChromeDriver();
-        System.out.println("Before");
+        System.out.println("BeforeEach");
     }
 
     @After
     public void closeChromeDriver() {
         driver.quit();
-        System.out.println("After");
+        System.out.println("AfterEach");
     }
 
     @Test
@@ -158,10 +159,8 @@ public class MainTest {
             driver.findElement(By.xpath("//li[@id=\"opc-confirm_order\"]//input[@type=\"button\" and @value=\"Confirm\"]")).click();
 
             // 12. Įsitikinti, kad užsakymas sėkmingai užskaitytas.
-            //// TODO dynamically track, what's in data files, and assert that numbers are correct
-            //// right now, it's hardcoded 3 of 3rd Album
-            String cartQty = driver.findElement(By.xpath("//tr[@class='cart-item-row' and  .//a[@class='product-name' and text()='3rd Album']]//td[@class='qty nobr']/span[2]")).getText();
-            assert cartQty.equals("3");
+            String result = driver.findElement(By.xpath("//div[@class='section order-completed']//div[@class='title']//strong\"]")).getText();
+            assert result.equals("Your order has been successfully processed!");
 
         } catch (Exception e) {
             System.out.println(":(");
@@ -170,8 +169,78 @@ public class MainTest {
 
     @Test
     public void data2ToCartTest() {
+        try {
+            // 1. Atsidaryti tinklalapį https://demowebshop.tricentis.com/
+            driver.get("https://demowebshop.tricentis.com/");
+            driver.manage().window().maximize();
 
+            // 2. Spausti 'Log in'
+            driver.findElement(By.xpath("//a[@href=\"/login\"]")).click();
+
+            // 3. Užpildyti 'Email:', 'Password:' ir spausti 'Log in'
+            driver.findElement(By.id("Email")).sendKeys(user.getEmail());
+            driver.findElement(By.id("Password")).sendKeys(user.getPassword());
+            driver.findElement(By.xpath("//input[@value=\"Log in\"]")).click();
+
+            // 4. Šoniniame meniu pasirinkti 'Digital downloads'
+            driver.findElement(By.xpath("//div[@class=\"leftside-3\"]//*[@href=\"/digital-downloads\"]")).click();
+
+            // 5. Pridėti į krepšelį prekes nuskaitant tekstinį failą
+            /// data2.txt
+            List<String> products = getDataFromFile("data2.txt");
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            By cartQtyLocator = By.xpath("//span[@class='cart-qty']");
+
+            for (String product : products) {
+                String initialCartQty = driver.findElement(cartQtyLocator).getText();
+                driver.findElement(By.xpath("//div[@class='details' and .//*[text()='"
+                        + product + "']]//input[@value='Add to cart']")).click();
+
+                wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(cartQtyLocator, initialCartQty)));
+            }
+
+            // 6. Atsidaryti 'Shopping cart'
+            driver.findElement(By.xpath("//span[text()=\"Shopping cart\"]")).click();
+
+            // 7. Paspausti 'I agree' varnelę ir mygtuką 'Checkout'
+            driver.findElement(By.id("termsofservice")).click();
+            driver.findElement(By.id("checkout")).click();
+
+            // 8. 'Billing Address' pasirinkti jau esantį adresą arba supildyti naujo
+            // adreso, spausti 'Continue'
+            /// 8.1 'Country' choose 'Lithuania'
+            WebElement dropdown = driver.findElement(By.id("BillingNewAddress_CountryId"));
+            Select select = new Select(dropdown);
+            select.selectByVisibleText("Lithuania");
+            /// 8.2 'City' įvesti 'Vilnius'
+            driver.findElement(By.id("BillingNewAddress_City")).sendKeys("Vilnius");
+            /// 8.3 'Address 1' įvesti 'Gedimino pr. 1'
+            driver.findElement(By.id("BillingNewAddress_Address1")).sendKeys("Gedimino pr. 1");
+            /// 8.4 'Zip / postal code' įvesti 'LT-01103'
+            driver.findElement(By.id("BillingNewAddress_ZipPostalCode")).sendKeys("LT-01103");
+            /// 8.5 'Phone number' įvesti '+37060000000'
+            driver.findElement(By.id("BillingNewAddress_PhoneNumber")).sendKeys("+37060000000");
+            /// 8.6 'Continue' click
+            driver.findElement(By.xpath("//li[@id=\"opc-billing\"]//input[@type=\"button\" and @value=\"Continue\"]")).click();
+
+            // 9. 'Payment Method' spausti 'Continue'
+            driver.findElement(By.xpath("//li[@id=\"opc-payment_method\"]//input[@type=\"button\" and @value=\"Continue\"]")).click();
+
+            // 10. 'Payment Information' spausti 'Continue'
+            driver.findElement(By.xpath("//li[@id=\"opc-payment_info\"]//input[@type=\"button\" and @value=\"Continue\"]")).click();
+
+            // 11. 'Confirm Order' spausti 'Confirm'
+            driver.findElement(By.xpath("//li[@id=\"opc-confirm_order\"]//input[@type=\"button\" and @value=\"Confirm\"]")).click();
+
+            // 12. Įsitikinti, kad užsakymas sėkmingai užskaitytas.
+            String result = driver.findElement(By.xpath("//div[@class='section order-completed']//div[@class='title']//strong\"]")).getText();
+            assert result.equals("Your order has been successfully processed!");
+
+        } catch (Exception e) {
+            System.out.println(":(");
+        }
     }
+
 
     private static String getNewId(File usersFile) {
         int nextId = 0;

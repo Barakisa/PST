@@ -1,6 +1,7 @@
 ## Other ignores
 *.settings
 *.idea
+users.csv
 
 ## JAVA gitignore
 
